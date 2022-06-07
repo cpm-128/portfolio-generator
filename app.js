@@ -1,8 +1,14 @@
-const profileDataArgs = process.argv.slice(2, process.argv.length);
+// add file system library
+const fs = require('fs');
+
+// get args from the command line
+const profileDataArgs = process.argv.slice(2);
     //console.log(profileDataArgs);
 
+// these are the const names of the args from the command line
 const [name, github] = profileDataArgs;
 
+// generate html as a string
 const generatePage = (name, github) => {
     return `
 
@@ -25,8 +31,13 @@ const generatePage = (name, github) => {
     `;
 };
 
-console.log(name, github);
-console.log(generatePage(name , github));
+// use module to actually generate an html file
+// fs.writefile ( file name , data being written , callback function for errors/success )
+fs.writeFile('index.html' , generatePage(name,github) , err => {
+    if (err) throw new Error(err);
+
+    console.log('Portfolio complete. Check out index.html to see the output.');
+});
 
 // const printProfileData = profileDataArr => {
 
