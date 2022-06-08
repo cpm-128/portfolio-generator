@@ -1,25 +1,35 @@
-// add file system library
-const fs = require('fs');
+// add inquirer module
+const inquirer = require('inquirer');
 
-// receive the exported function
-const generatePage = require('./src/page-template.js');
+// // add file system library
+// const fs = require('fs');
 
-// get args from the command line
-const profileDataArgs = process.argv.slice(2);
-    //console.log(profileDataArgs);
+// // receive the exported function
+// const generatePage = require('./src/page-template.js');
 
-// these are the const names of the args from the command line
-const [name, github] = profileDataArgs;
+// inquirer questions and answers
+inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'What is your name?'
+        }
+    ])
+    .then(answers => console.log(">>> " , answers));
 
+// // populate html text
+// const pageHTML = generatePage(name, github);
 
+// // use module to actually generate an html file
+// // fs.writefile ( file name , data being written , callback function for errors/success )
+// fs.writeFile('./index.html' , pageHTML , err => {
+//     if (err) throw err;
 
-// use module to actually generate an html file
-// fs.writefile ( file name , data being written , callback function for errors/success )
-fs.writeFile('index.html' , generatePage(name,github) , err => {
-    if (err) throw new Error(err);
+//     console.log('Portfolio complete. Check out index.html to see the output.');
+// });
 
-    console.log('Portfolio complete. Check out index.html to see the output.');
-});
+// =========
 
 // const printProfileData = profileDataArr => {
 
