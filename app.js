@@ -29,13 +29,20 @@ const promptUser = () => {
     ])
 };
 
-const promptProject = () => {
+const promptProject = portfolioData => {
+    // add an array called portfolioData to store multiple project objects
+    // if there are no 'projects' in array, create an array
+    if (!portfolioData.projects) {
+        portfolioData.projects = [];
+    }
+
     // backticks allow for carriage returns
     console.log(`
     =================
     Add a New Project
     =================
     `);
+
     return inquirer.prompt([
         {
             type: 'input',
@@ -71,13 +78,23 @@ const promptProject = () => {
             default: false
         }
     ])
+    .then(projectData => {
+        portfolioData.projects.push(projectData);
+        if (projectData.confirmAddProject) {
+            return promptProject(portfolioData);
+        } else {
+            return portfolioData;
+        }
+    });
 };
 
 // use .then functions to control the application's flow
 promptUser()
-    .then(answers => console.log(">>> about user" , answers))
+    //.then(answers => console.log(">>> about user" , answers))
     .then(promptProject)
-    .then(projectAnswers => console.log(">>> about project" , projectAnswers));
+    .then(portfolioData => {
+        console.log(">>> portfolio data" , portfolioData)
+    });
     // how did projectAnswers get defined here??
 
 // // populate html text
